@@ -11,8 +11,8 @@
   "require": {
     "ordercloud/ordercloud": "~0.3",
     "ordercloud/extentions-monolog": "~0.1",
-    "illuminate/support": ">=4",
-    "illuminate/session": ">=4"
+    "illuminate/support": "~4",
+    "illuminate/session": "~4"
   },
   "require-dev": {
     "phpspec/phpspec": "2.2.0",
