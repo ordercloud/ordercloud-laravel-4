@@ -61,6 +61,8 @@ class OrdercloudServiceProvider extends ServiceProvider
         // Use session access token storage
         $this->app->singleton(AccessTokenStorage::class, SessionAccessTokenStorage::class);
 
+        $this->app->singleton(UserProviderInterface::class, UserProvider::class);
+
         $this->registerFileLogHandler();
     }
 
