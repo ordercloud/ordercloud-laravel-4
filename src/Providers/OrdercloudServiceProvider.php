@@ -72,6 +72,8 @@ class OrdercloudServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->package('ordercloud/laravel', 'ordercloud');
+
         $this->builder = OrdercloudBuilder::create()
             ->setBaseUrl($this->config('api_url'))
             ->setUsername($this->config('username'))
