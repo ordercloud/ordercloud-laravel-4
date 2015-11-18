@@ -1,6 +1,6 @@
 <?php namespace Ordercloud\Laravel\Auth;
 
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Auth\Guard;
 use Ordercloud\Entities\Auth\AccessToken;
 use Ordercloud\Ordercloud;
 use Ordercloud\Requests\Auth\Entities\Authorisation;
@@ -42,7 +42,7 @@ class OrdercloudAuth
     {
         $user = $this->users->getLoggedInUser(Authorisation::createWithAccessToken($accessToken));
 
-        $this->guard->login(AuthenticatableUser::wrapUser($user));
+        $this->guard->login(new AuthenticatableUser($user));
 
         $this->ordercloud->setAccessToken($accessToken);
 

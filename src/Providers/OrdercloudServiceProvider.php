@@ -1,6 +1,5 @@
 <?php namespace Ordercloud\Laravel\Providers;
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;

@@ -1,11 +1,11 @@
 <?php namespace Ordercloud\Laravel\Auth;
 
 use Exception;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\UserProvider as IlluminateUserProvider;
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\UserProviderInterface;
 use Ordercloud\Services\UserService;
 
-class UserProvider implements IlluminateUserProvider
+class UserProvider implements UserProviderInterface
 {
     /**
      * @var UserService
@@ -21,7 +21,7 @@ class UserProvider implements IlluminateUserProvider
     {
         $user = $this->users->getUser($identifier);
 
-        return AuthenticatableUser::wrapUser($user);
+        return new AuthenticatableUser($user);
     }
 
     public function retrieveByToken($identifier, $token)
@@ -29,17 +29,17 @@ class UserProvider implements IlluminateUserProvider
         throw new Exception('Not supported');
     }
 
-    public function updateRememberToken(Authenticatable $user, $token)
-    {
-        // TODO
-    }
-
     public function retrieveByCredentials(array $credentials)
     {
         throw new Exception('Not supported');
     }
 
-    public function validateCredentials(Authenticatable $user, array $credentials)
+    public function updateRememberToken(UserInterface $user, $token)
+    {
+        // this is always called - never used - do nothing
+    }
+
+    public function validateCredentials(UserInterface $user, array $credentials)
     {
         throw new Exception('Not supported');
     }

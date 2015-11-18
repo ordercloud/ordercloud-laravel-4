@@ -1,24 +1,14 @@
 <?php namespace Ordercloud\Laravel\Auth;
 
-use Exception;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\UserInterface;
 use Ordercloud\Entities\Users\User as OrdercloudUser;
+use Ordercloud\OrdercloudException;
 
-class AuthenticatableUser extends OrdercloudUser implements Authenticatable
+class AuthenticatableUser extends OrdercloudUser implements UserInterface
 {
-    /**
-     * @var string
-     */
-    private $rememberToken;
-
-    /**
-     * @param OrdercloudUser $user
-     *
-     * @return static
-     */
-    public static function wrapUser(OrdercloudUser $user)
+    public function __construct(OrdercloudUser $user)
     {
-        return new static(
+        parent::__construct(
             $user->getId(),
             $user->isEnabled(),
             $user->getUsername(),
@@ -36,33 +26,21 @@ class AuthenticatableUser extends OrdercloudUser implements Authenticatable
 
     public function getAuthPassword()
     {
-        throw new Exception('Not supported');
+        throw new OrdercloudException('Should not be authenticating on this app, use OAuth.');
     }
 
     public function getRememberToken()
     {
-        // TODO
-        return $this->rememberToken;
+        throw new OrdercloudException('Not supported.');
     }
 
     public function setRememberToken($value)
     {
-        // TODO
-        $this->rememberToken = $value;
+        // This is called on logout, since we do not support remember me functionality - do nothing
     }
 
     public function getRememberTokenName()
     {
-        throw new Exception('Not supported');
-    }
-
-    /**
-     * Get the name of the unique identifier for the user.
-     *
-     * @return string
-     */
-    public function getAuthIdentifierName()
-    {
-        // TODO
+        throw new OrdercloudException('This provider does not have a remember me "column".');
     }
 }
